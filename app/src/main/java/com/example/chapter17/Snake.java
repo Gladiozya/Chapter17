@@ -213,48 +213,37 @@ class Snake {
             // Draw the head
             switch (heading) {
                 case RIGHT:
-                    canvas.drawBitmap(mBitmapHeadRight,
-                            segmentLocations.get(0).x
-                                    * mSegmentSize,
-                            segmentLocations.get(0).y
-                                    * mSegmentSize, paint);
+                    drawBit(mBitmapHeadRight,0, canvas, paint);
                     break;
 
                 case LEFT:
-                    canvas.drawBitmap(mBitmapHeadLeft,
-                            segmentLocations.get(0).x
-                                    * mSegmentSize,
-                            segmentLocations.get(0).y
-                                    * mSegmentSize, paint);
+                    drawBit(mBitmapHeadLeft,0, canvas, paint);
                     break;
 
                 case UP:
-                    canvas.drawBitmap(mBitmapHeadUp,
-                            segmentLocations.get(0).x
-                                    * mSegmentSize,
-                            segmentLocations.get(0).y
-                                    * mSegmentSize, paint);
+                    drawBit(mBitmapHeadUp, 0, canvas, paint);
                     break;
 
                 case DOWN:
-                    canvas.drawBitmap(mBitmapHeadDown,
-                            segmentLocations.get(0).x
-                                    * mSegmentSize,
-                            segmentLocations.get(0).y
-                                    * mSegmentSize, paint);
+                    drawBit(mBitmapHeadDown,0, canvas, paint);
                     break;
             }
 
             // Draw the snake body one block at a time
             for (int i = 1; i < segmentLocations.size(); i++) {
-                canvas.drawBitmap(mBitmapBody,
-                        segmentLocations.get(i).x
-                                * mSegmentSize,
-                        segmentLocations.get(i).y
-                                * mSegmentSize, paint);
+                drawBit(mBitmapBody, i, canvas, paint);
             }
         }
     }
+
+void drawBit(Bitmap headDirection,int location ,Canvas canvas, Paint paint){
+    canvas.drawBitmap(headDirection,
+            segmentLocations.get(location).x
+                    * mSegmentSize,
+            segmentLocations.get(location).y
+                    * mSegmentSize, paint);
+}
+
 
 
     // Handle changing direction
