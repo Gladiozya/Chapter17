@@ -34,16 +34,10 @@ class Snake {
     // Start by heading to the right
     private Heading heading = Heading.RIGHT;
 
-    // A bitmap for each direction the head can face
-    private Bitmap mBitmapHeadRight;
-    private Bitmap mBitmapHeadLeft;
-    private Bitmap mBitmapHeadUp;
-    private Bitmap mBitmapHeadDown;
-
     // A bitmap for the body
     private Bitmap mBitmapBody;
 
-
+    SnakeHeadBitmap HeadBitmap;
 
     Snake(Context context, Point mr, int ss) {
 
@@ -55,47 +49,20 @@ class Snake {
         mSegmentSize = ss;
         mMoveRange = mr;
 
-        // Create and scale the bitmaps
-        setmBitmapHeadRight(initializeBitmap(mBitmapHeadRight, context));
-        setmBitmapHeadLeft(initializeBitmap(mBitmapHeadLeft, context));
-        setmBitmapHeadUp(initializeBitmap(mBitmapHeadUp, context));
-        setmBitmapHeadDown(initializeBitmap(mBitmapHeadDown, context));
-
-        // Modify the bitmaps to face the snake head
-        // in the correct direction
-        mBitmapHeadRight = Bitmap
-                .createScaledBitmap(mBitmapHeadRight,
-                        ss, ss, false);
-
         // A matrix for scaling
         Matrix matrix = new Matrix();
         matrix.preScale(-1, 1);
 
-        mBitmapHeadLeft = Bitmap
-                .createBitmap(mBitmapHeadRight,
-                        0, 0, ss, ss, matrix, true);
-
-        // A matrix for rotating
-        matrix.preRotate(-90);
-        mBitmapHeadUp = Bitmap
-                .createBitmap(mBitmapHeadRight,
-                        0, 0, ss, ss, matrix, true);
-
-        // Matrix operations are cumulative
-        // so rotate by 180 to face down
-        matrix.preRotate(180);
-        mBitmapHeadDown = Bitmap
-                .createBitmap(mBitmapHeadRight,
-                        0, 0, ss, ss, matrix, true);
+        // Create and scale the bitmaps
+        HeadBitmap = new SnakeHeadBitmap(context,ss);
 
         // Create and scale the body
         mBitmapBody = BitmapFactory
                 .decodeResource(context.getResources(),
                         R.drawable.body);
 
-        mBitmapBody = Bitmap
-                .createScaledBitmap(mBitmapBody,
-                        ss, ss, false);
+        mBitmapBody = Bitmap.createScaledBitmap(
+                mBitmapBody, ss, ss, false);
 
         // The halfway point across the screen in pixels
         // Used to detect which side of screen was pressed
@@ -197,6 +164,8 @@ class Snake {
     void draw(Canvas canvas, Paint paint) {
 
         // Don't run this code if ArrayList has nothing in it
+
+      /*
         if (!segmentLocations.isEmpty()) {
             // All the code from this method goes here
             // Draw the head
@@ -216,14 +185,15 @@ class Snake {
                 case DOWN:
                     drawBit(mBitmapHeadDown, 0, canvas, paint);
                     break;
+
             }
 
+            */
             // Draw the snake body one block at a time
             for (int i = 1; i < segmentLocations.size(); i++) {
                 drawBit(mBitmapBody, i, canvas, paint);
             }
         }
-    }
 
     // Handle changing direction
     void switchHeading(MotionEvent motionEvent) {
@@ -274,43 +244,7 @@ class Snake {
                         * mSegmentSize, paint);
     }
 
-    Bitmap initializeBitmap (Bitmap BitmapDirection, Context context){
-        BitmapDirection = BitmapFactory
-                .decodeResource(context.getResources(),
-                        R.drawable.head);
-    return BitmapDirection;
-    }
 
-    public Bitmap getmBitmapHeadRight() {
-        return mBitmapHeadRight;
-    }
 
-    public void setmBitmapHeadRight(Bitmap mBitmapHeadRight) {
-        this.mBitmapHeadRight = mBitmapHeadRight;
-    }
-
-    public Bitmap getmBitmapHeadLeft() {
-        return mBitmapHeadLeft;
-    }
-
-    public void setmBitmapHeadLeft(Bitmap mBitmapHeadLeft) {
-        this.mBitmapHeadLeft = mBitmapHeadLeft;
-    }
-
-    public Bitmap getmBitmapHeadUp() {
-        return mBitmapHeadUp;
-    }
-
-    public void setmBitmapHeadUp(Bitmap mBitmapHeadUp) {
-        this.mBitmapHeadUp = mBitmapHeadUp;
-    }
-
-    public Bitmap getmBitmapHeadDown() {
-        return mBitmapHeadDown;
-    }
-
-    public void setmBitmapHeadDown(Bitmap mBitmapHeadDown) {
-        this.mBitmapHeadDown = mBitmapHeadDown;
-    }
 
 }
