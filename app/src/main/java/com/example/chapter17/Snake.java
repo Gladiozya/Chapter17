@@ -44,6 +44,7 @@ class Snake {
     private Bitmap mBitmapBody;
 
 
+
     Snake(Context context, Point mr, int ss) {
 
         // Initialize our ArrayList
@@ -55,22 +56,10 @@ class Snake {
         mMoveRange = mr;
 
         // Create and scale the bitmaps
-        mBitmapHeadRight = BitmapFactory
-                .decodeResource(context.getResources(),
-                        R.drawable.head);
-
-        // Create 3 more versions of the head for different headings
-        mBitmapHeadLeft = BitmapFactory
-                .decodeResource(context.getResources(),
-                        R.drawable.head);
-
-        mBitmapHeadUp = BitmapFactory
-                .decodeResource(context.getResources(),
-                        R.drawable.head);
-
-        mBitmapHeadDown = BitmapFactory
-                .decodeResource(context.getResources(),
-                        R.drawable.head);
+        setmBitmapHeadRight(initializeBitmap(mBitmapHeadRight, context));
+        setmBitmapHeadLeft(initializeBitmap(mBitmapHeadLeft, context));
+        setmBitmapHeadUp(initializeBitmap(mBitmapHeadUp, context));
+        setmBitmapHeadDown(initializeBitmap(mBitmapHeadDown, context));
 
         // Modify the bitmaps to face the snake head
         // in the correct direction
@@ -213,11 +202,11 @@ class Snake {
             // Draw the head
             switch (heading) {
                 case RIGHT:
-                    drawBit(mBitmapHeadRight,0, canvas, paint);
+                    drawBit(mBitmapHeadRight, 0, canvas, paint);
                     break;
 
                 case LEFT:
-                    drawBit(mBitmapHeadLeft,0, canvas, paint);
+                    drawBit(mBitmapHeadLeft, 0, canvas, paint);
                     break;
 
                 case UP:
@@ -225,7 +214,7 @@ class Snake {
                     break;
 
                 case DOWN:
-                    drawBit(mBitmapHeadDown,0, canvas, paint);
+                    drawBit(mBitmapHeadDown, 0, canvas, paint);
                     break;
             }
 
@@ -235,16 +224,6 @@ class Snake {
             }
         }
     }
-
-void drawBit(Bitmap headDirection,int location ,Canvas canvas, Paint paint){
-    canvas.drawBitmap(headDirection,
-            segmentLocations.get(location).x
-                    * mSegmentSize,
-            segmentLocations.get(location).y
-                    * mSegmentSize, paint);
-}
-
-
 
     // Handle changing direction
     void switchHeading(MotionEvent motionEvent) {
@@ -285,4 +264,53 @@ void drawBit(Bitmap headDirection,int location ,Canvas canvas, Paint paint){
             }
         }
     }
+
+
+    void drawBit(Bitmap headDirection,int location ,Canvas canvas, Paint paint){
+        canvas.drawBitmap(headDirection,
+                segmentLocations.get(location).x
+                        * mSegmentSize,
+                segmentLocations.get(location).y
+                        * mSegmentSize, paint);
+    }
+
+    Bitmap initializeBitmap (Bitmap BitmapDirection, Context context){
+        BitmapDirection = BitmapFactory
+                .decodeResource(context.getResources(),
+                        R.drawable.head);
+    return BitmapDirection;
+    }
+
+    public Bitmap getmBitmapHeadRight() {
+        return mBitmapHeadRight;
+    }
+
+    public void setmBitmapHeadRight(Bitmap mBitmapHeadRight) {
+        this.mBitmapHeadRight = mBitmapHeadRight;
+    }
+
+    public Bitmap getmBitmapHeadLeft() {
+        return mBitmapHeadLeft;
+    }
+
+    public void setmBitmapHeadLeft(Bitmap mBitmapHeadLeft) {
+        this.mBitmapHeadLeft = mBitmapHeadLeft;
+    }
+
+    public Bitmap getmBitmapHeadUp() {
+        return mBitmapHeadUp;
+    }
+
+    public void setmBitmapHeadUp(Bitmap mBitmapHeadUp) {
+        this.mBitmapHeadUp = mBitmapHeadUp;
+    }
+
+    public Bitmap getmBitmapHeadDown() {
+        return mBitmapHeadDown;
+    }
+
+    public void setmBitmapHeadDown(Bitmap mBitmapHeadDown) {
+        this.mBitmapHeadDown = mBitmapHeadDown;
+    }
+
 }
