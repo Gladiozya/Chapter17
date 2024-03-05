@@ -113,7 +113,7 @@ class SnakeGame extends SurfaceView implements Runnable{
         mSnake.reset(NUM_BLOCKS_WIDE, mNumBlocksHigh);
 
         // Get the apple ready for dinner
-        mApple.spawn();
+        AppleLocation.spawn();
 
         // Reset the mScore
         mScore = 0;
@@ -174,7 +174,7 @@ class SnakeGame extends SurfaceView implements Runnable{
         if(mSnake.checkDinner(mApple.getLocation())){
             // This reminds me of Edge of Tomorrow.
             // One day the apple will be ready!
-            mApple.spawn();
+            AppleLocation.spawn();
 
             // Add to  mScore
             mScore = mScore + 1;
@@ -211,7 +211,7 @@ class SnakeGame extends SurfaceView implements Runnable{
             mCanvas.drawText("" + mScore, 20, 120, mPaint);
 
             // Draw the apple and the snake
-            mApple.draw(mCanvas, mPaint);
+            DrawApple.draw(mCanvas, mPaint);
             mSnake.draw(mCanvas, mPaint);
 
             // Draw some text while paused
