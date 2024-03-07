@@ -9,23 +9,23 @@ public class SnakeHeadBitmap {
     private Bitmap mBitmapHeadLeft;
     private Bitmap mBitmapHeadUp;
     private Bitmap mBitmapHeadDown;
-
-    public Matrix matrix = new Matrix();
+    Matrix matrix = new Matrix();
 
     SnakeHeadBitmap(Context context, int ss){
-        matrix.preScale(-1, 1);
-
         // Create and scale the bitmaps
-        setmBitmapHeadRight(initializeBitmap(mBitmapHeadRight, context));
-        setmBitmapHeadLeft(initializeBitmap(mBitmapHeadLeft, context));
-        setmBitmapHeadUp(initializeBitmap(mBitmapHeadUp, context));
-        setmBitmapHeadDown(initializeBitmap(mBitmapHeadDown, context));
+        setmBitmapHeadRight(initializeBitmap(context));
+        setmBitmapHeadLeft(initializeBitmap(context));
+        setmBitmapHeadUp(initializeBitmap(context));
+        setmBitmapHeadDown(initializeBitmap(context));
 
         // Modify the bitmaps to face the snake head
         // in the correct direction
         setmBitmapHeadRight(initializeMatrix(mBitmapHeadRight,ss,false));
-        setmBitmapHeadLeft(initializeMatrix(mBitmapHeadLeft,ss,true));
 
+        // A matrix for scaling
+        matrix.preScale(-1, 1);
+
+        setmBitmapHeadLeft(initializeMatrix(mBitmapHeadLeft,ss,true));
         // A matrix for rotating
         matrix.preRotate(-90);
         setmBitmapHeadUp(initializeMatrix(mBitmapHeadUp,ss,true));
@@ -69,19 +69,18 @@ public class SnakeHeadBitmap {
         this.mBitmapHeadDown = mBitmapHeadDown;
     }
 
-    Bitmap initializeBitmap (Bitmap BitmapDirection, Context context){
-        BitmapDirection = BitmapFactory.decodeResource(
+    Bitmap initializeBitmap (Context context){
+        return BitmapFactory.decodeResource(
                 context.getResources(), R.drawable.head);
-
-        return BitmapDirection;
     }
 
     Bitmap initializeMatrix(Bitmap direction, int ss, boolean used){
-
-        Bitmap.createBitmap(mBitmapHeadRight,
+        if(direction == mBitmapHeadRight){
+            return Bitmap.createScaledBitmap(mBitmapHeadRight,
+                            ss, ss, false);
+        }
+        return Bitmap.createBitmap(mBitmapHeadRight,
                 0, 0, ss, ss, matrix, used);
-
-        return direction;
     }
 
 }

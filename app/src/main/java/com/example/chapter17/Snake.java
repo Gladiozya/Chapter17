@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.view.MotionEvent;
@@ -48,10 +47,6 @@ class Snake {
         // range from the passed in parameters
         mSegmentSize = ss;
         mMoveRange = mr;
-
-        // A matrix for scaling
-        Matrix matrix = new Matrix();
-        matrix.preScale(-1, 1);
 
         // Create and scale the bitmaps
         HeadBitmap = new SnakeHeadBitmap(context,ss);
@@ -165,35 +160,35 @@ class Snake {
 
         // Don't run this code if ArrayList has nothing in it
 
-      /*
         if (!segmentLocations.isEmpty()) {
             // All the code from this method goes here
             // Draw the head
             switch (heading) {
                 case RIGHT:
-                    drawBit(mBitmapHeadRight, 0, canvas, paint);
+                    drawBit(HeadBitmap.getmBitmapHeadRight(), 0, canvas, paint);
                     break;
 
                 case LEFT:
-                    drawBit(mBitmapHeadLeft, 0, canvas, paint);
+                    drawBit(HeadBitmap.getmBitmapHeadLeft(), 0, canvas, paint);
                     break;
 
                 case UP:
-                    drawBit(mBitmapHeadUp, 0, canvas, paint);
+                    drawBit(HeadBitmap.getmBitmapHeadUp(), 0, canvas, paint);
                     break;
 
                 case DOWN:
-                    drawBit(mBitmapHeadDown, 0, canvas, paint);
+                    drawBit(HeadBitmap.getmBitmapHeadDown(), 0, canvas, paint);
                     break;
 
             }
 
-            */
+
             // Draw the snake body one block at a time
             for (int i = 1; i < segmentLocations.size(); i++) {
                 drawBit(mBitmapBody, i, canvas, paint);
             }
         }
+    }
 
     // Handle changing direction
     void switchHeading(MotionEvent motionEvent) {
