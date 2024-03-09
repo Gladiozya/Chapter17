@@ -1,33 +1,44 @@
 package com.example.chapter17;
 
 import android.content.Context;
-import android.graphics.*;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.Point;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
-class Snake{
+class Snake {
 
-        // The location in the grid of all the segments
-        private ArrayList<Point> segmentLocations;
+    // The location in the grid of all the segments
+    private ArrayList<Point> segmentLocations;
 
-        // How big is each segment of the snake?
-        private int mSegmentSize;
+    // How big is each segment of the snake?
+    private int mSegmentSize;
 
-        // How big is the entire grid
-        private Point mMoveRange;
+    // How big is the entire grid
+    private Point mMoveRange;
 
-        // Where is the centre of the screen
-        // horizontally in pixels?
-        private int halfWayPoint;
+    // Where is the centre of the screen
+    // horizontally in pixels?
+    private int halfWayPoint;
 
-        // A bitmap for the body
-        private Bitmap mBitmapBody;
+    // For tracking movement Heading
+    private enum Heading {
+        UP, RIGHT, DOWN, LEFT
+    }
 
-        private SnakeHeadBitmap HeadBitmap;
-        private SnakeHeadDirection snakeDirection;
+    // Start by heading to the right
+    private Heading heading = Heading.RIGHT;
 
-    Snake(){}
+    // A bitmap for the body
+    private Bitmap mBitmapBody;
+
+    SnakeHeadBitmap HeadBitmap;
+
     Snake(Context context, Point mr, int ss) {
 
         // Initialize our ArrayList
@@ -38,9 +49,12 @@ class Snake{
         mSegmentSize = ss;
         mMoveRange = mr;
 
+        // A matrix for scaling
+        Matrix matrix = new Matrix();
+        matrix.preScale(-1, 1);
+
         // Create and scale the bitmaps
         HeadBitmap = new SnakeHeadBitmap(context,ss);
-        snakeDirection= new SnakeHeadDirection();
 
         // Create and scale the body
         mBitmapBody = BitmapFactory
@@ -59,7 +73,7 @@ class Snake{
     void reset(int w, int h) {
 
         // Reset the heading
-        snakeDirection.reset();
+        heading = Heading.RIGHT;
 
         // Delete the old contents of the ArrayList
         segmentLocations.clear();
@@ -85,7 +99,25 @@ class Snake{
         // Get the existing head position
         Point p = segmentLocations.get(0);
 
-        snakeDirection.movement(segmentLocations);
+        // Move it appropriately
+        switch (heading) {
+            case UP:
+                p.y--;
+                break;
+
+            case RIGHT:
+                p.x++;
+                break;
+
+            case DOWN:
+                p.y++;
+                break;
+
+            case LEFT:
+                p.x--;
+                break;
+        }
+
     }
 
     boolean detectDeath() {
@@ -129,17 +161,76 @@ class Snake{
         return false;
     }
 
-     void draw(Canvas canvas, Paint paint) {
+    void draw(Canvas canvas, Paint paint) {
 
         // Don't run this code if ArrayList has nothing in it
 
+      /*
         if (!segmentLocations.isEmpty()) {
+            // All the code from this method goes here
+            // Draw the head
+            switch (heading) {
+                case RIGHT:
+                    drawBit(mBitmapHeadRight, 0, canvas, paint);
+                    break;
 
-            snakeDirection.draw(HeadBitmap, canvas,paint);
+                case LEFT:
+                    drawBit(mBitmapHeadLeft, 0, canvas, paint);
+                    break;
 
+                case UP:
+                    drawBit(mBitmapHeadUp, 0, canvas, paint);
+                    break;
+
+                case DOWN:
+                    drawBit(mBitmapHeadDown, 0, canvas, paint);
+                    break;
+
+            }
+
+            */
             // Draw the snake body one block at a time
             for (int i = 1; i < segmentLocations.size(); i++) {
                 drawBit(mBitmapBody, i, canvas, paint);
+            }
+        }
+
+    // Handle changing direction
+    void switchHeading(MotionEvent motionEvent) {
+
+        // Is the tap on the right hand side?
+        if (motionEvent.getX() >= halfWayPoint) {
+            switch (heading) {
+                // Rotate right
+                case UP:
+                    heading = Heading.RIGHT;
+                    break;
+                case RIGHT:
+                    heading = Heading.DOWN;
+                    break;
+                case DOWN:
+                    heading = Heading.LEFT;
+                    break;
+                case LEFT:
+                    heading = Heading.UP;
+                    break;
+
+            }
+        } else {
+            // Rotate left
+            switch (heading) {
+                case UP:
+                    heading = Heading.LEFT;
+                    break;
+                case LEFT:
+                    heading = Heading.DOWN;
+                    break;
+                case DOWN:
+                    heading = Heading.RIGHT;
+                    break;
+                case RIGHT:
+                    heading = Heading.UP;
+                    break;
             }
         }
     }
@@ -153,9 +244,7 @@ class Snake{
                         * mSegmentSize, paint);
     }
 
-    void switchHeading(MotionEvent motionEvent){
-        snakeDirection.changeDirection(motionEvent, halfWayPoint);
-    }
+
 
 
 }
