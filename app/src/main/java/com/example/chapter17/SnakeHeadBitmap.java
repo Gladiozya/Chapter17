@@ -18,8 +18,7 @@ public class SnakeHeadBitmap {
         setmBitmapHeadUp(initializeBitmap(context));
         setmBitmapHeadDown(initializeBitmap(context));
 
-        // Modify the bitmaps to face the snake head
-        // in the correct direction
+        // Modify the bitmaps to face the snake head in the correct direction
         setmBitmapHeadRight(initializeMatrix(mBitmapHeadRight,ss,false));
 
         // A matrix for scaling
@@ -34,9 +33,7 @@ public class SnakeHeadBitmap {
         // so rotate by 180 to face down
         matrix.preRotate(180);
         setmBitmapHeadDown(initializeMatrix(mBitmapHeadDown,ss,true));
-
     }
-
     public Bitmap getmBitmapHeadRight() {
         return mBitmapHeadRight;
     }
@@ -65,7 +62,7 @@ public class SnakeHeadBitmap {
         return mBitmapHeadDown;
     }
 
-    public void setmBitmapHeadDown(Bitmap mBitmapHeadDown) {
+    void setmBitmapHeadDown(Bitmap mBitmapHeadDown) {
         this.mBitmapHeadDown = mBitmapHeadDown;
     }
 
