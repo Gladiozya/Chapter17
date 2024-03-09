@@ -27,7 +27,6 @@ class Snake{
         private SnakeHeadBitmap HeadBitmap;
         private SnakeHeadDirection snakeDirection;
 
-    Snake(){}
     Snake(Context context, Point mr, int ss) {
 
         // Initialize our ArrayList
@@ -135,7 +134,8 @@ class Snake{
 
         if (!segmentLocations.isEmpty()) {
 
-            snakeDirection.draw(HeadBitmap, canvas,paint);
+            Bitmap direction=snakeDirection.draw(HeadBitmap);
+            drawBit(direction, 0 , canvas, paint);
 
             // Draw the snake body one block at a time
             for (int i = 1; i < segmentLocations.size(); i++) {

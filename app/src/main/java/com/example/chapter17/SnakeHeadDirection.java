@@ -5,7 +5,7 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
-public class SnakeHeadDirection extends Snake{
+public class SnakeHeadDirection{
 
     private  enum Heading {
         UP, RIGHT, DOWN, LEFT
@@ -78,25 +78,22 @@ public class SnakeHeadDirection extends Snake{
             }
         }
     }
-    void draw(SnakeHeadBitmap HeadBitmap, Canvas canvas, Paint paint) {
+    Bitmap draw(SnakeHeadBitmap HeadBitmap) {
         // Draw the head
         switch (heading) {
             case RIGHT:
-                super.drawBit(HeadBitmap.getmBitmapHeadRight(), 0,canvas, paint);
-                break;
+                return HeadBitmap.getmBitmapHeadRight();
 
             case LEFT:
-                super.drawBit(HeadBitmap.getmBitmapHeadLeft(), 0, canvas, paint);
-                break;
+                return HeadBitmap.getmBitmapHeadLeft();
 
             case UP:
-                super.drawBit(HeadBitmap.getmBitmapHeadUp(), 0, canvas, paint);
-                break;
+                return HeadBitmap.getmBitmapHeadUp();
 
             case DOWN:
-                super.drawBit(HeadBitmap.getmBitmapHeadDown(), 0, canvas, paint);
-                break;
+                return HeadBitmap.getmBitmapHeadDown();
 
         }
+        return HeadBitmap.getmBitmapHeadRight();
     }
 }
