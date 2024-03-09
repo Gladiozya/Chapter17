@@ -9,22 +9,23 @@ public class SnakeHeadBitmap {
     private Bitmap mBitmapHeadLeft;
     private Bitmap mBitmapHeadUp;
     private Bitmap mBitmapHeadDown;
-
-    public Matrix matrix = new Matrix();
+    Matrix matrix = new Matrix();
 
     SnakeHeadBitmap(Context context, int ss){
+        // Create and scale the bitmaps
+        setmBitmapHeadRight(initializeBitmap(context));
+        setmBitmapHeadLeft(initializeBitmap(context));
+        setmBitmapHeadUp(initializeBitmap(context));
+        setmBitmapHeadDown(initializeBitmap(context));
+
+        // Modify the bitmaps to face the snake head
+        // in the correct direction
+        setmBitmapHeadRight(initializeMatrix(mBitmapHeadRight,ss,false));
+
+        // A matrix for scaling
         matrix.preScale(-1, 1);
 
-        // Create and scale the bitmaps
-        setmBitmapHeadRight(initializeBitmap(mBitmapHeadRight, context));
-        setmBitmapHeadLeft(initializeBitmap(mBitmapHeadLeft, context));
-        setmBitmapHeadUp(initializeBitmap(mBitmapHeadUp, context));
-        setmBitmapHeadDown(initializeBitmap(mBitmapHeadDown, context));
-
-        // Modify the bitmaps to face the snake head in the correct direction
-        setmBitmapHeadRight(initializeMatrix(mBitmapHeadRight,ss,false));
         setmBitmapHeadLeft(initializeMatrix(mBitmapHeadLeft,ss,true));
-
         // A matrix for rotating
         matrix.preRotate(-90);
         setmBitmapHeadUp(initializeMatrix(mBitmapHeadUp,ss,true));
@@ -33,7 +34,9 @@ public class SnakeHeadBitmap {
         // so rotate by 180 to face down
         matrix.preRotate(180);
         setmBitmapHeadDown(initializeMatrix(mBitmapHeadDown,ss,true));
+
     }
+
     public Bitmap getmBitmapHeadRight() {
         return mBitmapHeadRight;
     }
@@ -62,23 +65,22 @@ public class SnakeHeadBitmap {
         return mBitmapHeadDown;
     }
 
-    void setmBitmapHeadDown(Bitmap mBitmapHeadDown) {
+    public void setmBitmapHeadDown(Bitmap mBitmapHeadDown) {
         this.mBitmapHeadDown = mBitmapHeadDown;
     }
 
-    Bitmap initializeBitmap (Bitmap BitmapDirection, Context context){
-        BitmapDirection = BitmapFactory.decodeResource(
+    Bitmap initializeBitmap (Context context){
+        return BitmapFactory.decodeResource(
                 context.getResources(), R.drawable.head);
-
-        return BitmapDirection;
     }
 
     Bitmap initializeMatrix(Bitmap direction, int ss, boolean used){
-
-        Bitmap.createBitmap(mBitmapHeadRight,
+        if(direction == mBitmapHeadRight){
+            return Bitmap.createScaledBitmap(mBitmapHeadRight,
+                    ss, ss, false);
+        }
+        return Bitmap.createBitmap(mBitmapHeadRight,
                 0, 0, ss, ss, matrix, used);
-
-        return direction;
     }
 
 }
