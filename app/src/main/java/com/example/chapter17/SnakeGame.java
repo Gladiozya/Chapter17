@@ -48,6 +48,9 @@ class SnakeGame extends SurfaceView implements Runnable{
     // And an apple
     private Apple mApple;
 
+    SnakeHeadDirection mSnakeDirect;
+
+
     // This is the constructor method that gets called
     // from SnakeActivity
     public SnakeGame(Context context, Point size) {
@@ -90,6 +93,7 @@ class SnakeGame extends SurfaceView implements Runnable{
         // Initialize the drawing objects
         mSurfaceHolder = getHolder();
         mPaint = new Paint();
+
 
         // Call the constructors of our two game objects
         mApple = new Apple(context,
@@ -200,7 +204,7 @@ class SnakeGame extends SurfaceView implements Runnable{
             mCanvas = mSurfaceHolder.lockCanvas();
 
             // Fill the screen with a color
-            mCanvas.drawColor(Color.argb(255, 26, 128, 182));
+            mCanvas.drawColor(Color.argb(255, 100, 160, 100));
 
             // Set the size and color of the mPaint for the text
             mPaint.setColor(Color.argb(255, 255, 255, 255));
@@ -208,6 +212,7 @@ class SnakeGame extends SurfaceView implements Runnable{
 
             // Draw the score
             mCanvas.drawText("" + mScore, 20, 120, mPaint);
+
 
             // Draw the apple and the snake
             DrawApple.draw(mCanvas, mPaint);
