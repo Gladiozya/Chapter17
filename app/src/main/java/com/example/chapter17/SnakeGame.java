@@ -9,6 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.RectF;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -43,7 +44,7 @@ class SnakeGame extends SurfaceView implements Runnable{
     private Canvas mCanvas;
     private SurfaceHolder mSurfaceHolder;
     private Paint mPaint;
-
+    private Point mDisplay;
 
     private Snake mSnake;
     private Apple mApple;
@@ -53,6 +54,8 @@ class SnakeGame extends SurfaceView implements Runnable{
     // from SnakeActivity
     public SnakeGame(Context context, Point size) {
         super(context);
+
+        mDisplay=size;
 
         // Work out how many pixels each block is
         int blockSize = size.x / NUM_BLOCKS_WIDE;
@@ -105,6 +108,8 @@ class SnakeGame extends SurfaceView implements Runnable{
                 blockSize);
 
         mImage= BitmapFactory.decodeResource(context.getResources(), R.drawable.background);
+        mImage=Bitmap.createScaledBitmap(mImage,mDisplay.x,mDisplay.y,true);
+
 
     }
 
@@ -205,7 +210,7 @@ class SnakeGame extends SurfaceView implements Runnable{
 
 
             // Fill the screen with a color
-            mCanvas.drawBitmap(mImage,mCanvas.getWidth(),mCanvas.getHeight(),mPaint);
+            mCanvas.drawBitmap(mImage,0,0,mPaint);
 
 
             // Set the size and color of the mPaint for the text
