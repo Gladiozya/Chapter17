@@ -3,6 +3,8 @@ package com.example.chapter17;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -22,7 +24,7 @@ class SnakeGame extends SurfaceView implements Runnable{
     private Thread mThread = null;
     // Control pausing between updates
     private long mNextFrameTime;
-    // Is the game currently playing and or paused?
+
     private volatile boolean mPlaying = false;
     private volatile boolean mPaused = true;
 
@@ -35,7 +37,6 @@ class SnakeGame extends SurfaceView implements Runnable{
     private final int NUM_BLOCKS_WIDE = 40;
     private int mNumBlocksHigh;
 
-    // How many points does the player have
     private int mScore;
 
     // Objects for drawing
@@ -43,13 +44,10 @@ class SnakeGame extends SurfaceView implements Runnable{
     private SurfaceHolder mSurfaceHolder;
     private Paint mPaint;
 
-    // A snake ssss
+
     private Snake mSnake;
-    // And an apple
     private Apple mApple;
-
-    SnakeHeadDirection mSnakeDirect;
-
+    private Bitmap mImage;
 
     // This is the constructor method that gets called
     // from SnakeActivity
@@ -105,6 +103,8 @@ class SnakeGame extends SurfaceView implements Runnable{
                 new Point(NUM_BLOCKS_WIDE,
                         mNumBlocksHigh),
                 blockSize);
+
+        mImage= BitmapFactory.decodeResource(context.getResources(), R.drawable.background);
 
     }
 
@@ -203,8 +203,10 @@ class SnakeGame extends SurfaceView implements Runnable{
         if (mSurfaceHolder.getSurface().isValid()) {
             mCanvas = mSurfaceHolder.lockCanvas();
 
+
             // Fill the screen with a color
-            mCanvas.drawColor(Color.argb(255, 100, 160, 100));
+            mCanvas.drawBitmap(mImage,mCanvas.getWidth(),mCanvas.getHeight(),mPaint);
+
 
             // Set the size and color of the mPaint for the text
             mPaint.setColor(Color.argb(255, 255, 255, 255));

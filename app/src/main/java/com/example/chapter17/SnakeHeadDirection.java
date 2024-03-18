@@ -30,7 +30,7 @@ public class SnakeHeadDirection{
     private final int HEADINGSTART=0;
 
     void reset(){
-        heading=Heading.RIGHT;
+        heading=headingDirection[2];
     }
 
     // Move the head in the appropriate heading

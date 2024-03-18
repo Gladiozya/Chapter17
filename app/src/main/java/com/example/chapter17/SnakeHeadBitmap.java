@@ -24,8 +24,8 @@ public class SnakeHeadBitmap {
 
         // A matrix for scaling
         matrix.preScale(-1, 1);
-
         setmBitmapHeadLeft(initializeMatrix(mBitmapHeadLeft,ss,true));
+
         // A matrix for rotating
         matrix.preRotate(-90);
         setmBitmapHeadUp(initializeMatrix(mBitmapHeadUp,ss,true));
@@ -38,6 +38,7 @@ public class SnakeHeadBitmap {
     }
 
     public Bitmap getmBitmapHeadRight() {
+
         return mBitmapHeadRight;
     }
 
@@ -46,6 +47,7 @@ public class SnakeHeadBitmap {
     }
 
     public Bitmap getmBitmapHeadLeft() {
+
         return mBitmapHeadLeft;
     }
 
