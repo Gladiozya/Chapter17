@@ -114,7 +114,7 @@ class SnakeGame extends SurfaceView implements Runnable{
         mImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.background);
         mImage = Bitmap.createScaledBitmap(mImage, mDisplay.x, mDisplay.y, true);
 
-        mPaint.setTypeface(ResourcesCompat.getFont(context, R.font.comicneue_bolditalic));
+        mPaint.setTypeface(ResourcesCompat.getFont(context, R.font.rans));
 
     }
 
