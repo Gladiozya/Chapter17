@@ -9,7 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -17,6 +17,9 @@ import android.os.Build;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import androidx.core.content.res.ResourcesCompat;
+
 import java.io.IOException;
 
 class SnakeGame extends SurfaceView implements Runnable{
@@ -55,7 +58,7 @@ class SnakeGame extends SurfaceView implements Runnable{
     public SnakeGame(Context context, Point size) {
         super(context);
 
-        mDisplay=size;
+        mDisplay = size;
 
         // Work out how many pixels each block is
         int blockSize = size.x / NUM_BLOCKS_WIDE;
@@ -76,8 +79,9 @@ class SnakeGame extends SurfaceView implements Runnable{
         } else {
             mSP = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
         }
+        AssetManager assetManager = null;
         try {
-            AssetManager assetManager = context.getAssets();
+            assetManager = context.getAssets();
             AssetFileDescriptor descriptor;
 
             // Prepare the sounds in memory
@@ -107,9 +111,10 @@ class SnakeGame extends SurfaceView implements Runnable{
                         mNumBlocksHigh),
                 blockSize);
 
-        mImage= BitmapFactory.decodeResource(context.getResources(), R.drawable.background);
-        mImage=Bitmap.createScaledBitmap(mImage,mDisplay.x,mDisplay.y,true);
+        mImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.background);
+        mImage = Bitmap.createScaledBitmap(mImage, mDisplay.x, mDisplay.y, true);
 
+        mPaint.setTypeface(ResourcesCompat.getFont(context, R.font.comicneue_bolditalic));
 
     }
 
