@@ -9,7 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.graphics.Typeface;
+import android.graphics.Rect;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -53,12 +53,17 @@ class SnakeGame extends SurfaceView implements Runnable{
     private Apple mApple;
     private Bitmap mImage;
 
+    //sizes for button
+    private int buttonWidth;
+    private int buttonHeight;
+    private int buttonPadding;
+    private Rect mButton;
+    private MotionEvent mMotionEvent;
+
     // This is the constructor method that gets called
     // from SnakeActivity
     public SnakeGame(Context context, Point size) {
         super(context);
-
-        mDisplay = size;
 
         // Work out how many pixels each block is
         int blockSize = size.x / NUM_BLOCKS_WIDE;
@@ -110,6 +115,16 @@ class SnakeGame extends SurfaceView implements Runnable{
                 new Point(NUM_BLOCKS_WIDE,
                         mNumBlocksHigh),
                 blockSize);
+
+        mDisplay = size;
+        buttonWidth=mDisplay.x/14;
+        buttonHeight=mDisplay.y/12;
+        buttonPadding=buttonWidth/90;
+
+        mButton=new Rect(buttonPadding,
+                mDisplay.y-(2*buttonHeight)+(4*buttonPadding),
+                buttonWidth,
+                mDisplay.y-buttonPadding);
 
         mImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.background);
         mImage = Bitmap.createScaledBitmap(mImage, mDisplay.x, mDisplay.y, true);
@@ -196,6 +211,10 @@ class SnakeGame extends SurfaceView implements Runnable{
             mSP.play(mEat_ID, 1, 1, 0, 0, 1);
         }
 
+        if(mButton.top<mMotionEvent.getY() && mButton.right>mMotionEvent.getX()){
+            mPaused=true;
+        }
+
         // Did the snake die?
         if (mSnake.detectDeath()) {
             // Pause the game ready to start again
@@ -225,10 +244,19 @@ class SnakeGame extends SurfaceView implements Runnable{
             // Draw the score
             mCanvas.drawText("" + mScore, 20, 120, mPaint);
 
+            //draw the names
+            mPaint.setTextSize(100);
+            mCanvas.drawText("Corliss, Joshua", 2200, 120, mPaint);
 
             // Draw the apple and the snake
             DrawApple.draw(mCanvas, mPaint);
             mSnake.draw(mCanvas, mPaint);
+
+            //draw pause button
+            mPaint.setColor(Color.argb(100,255,255,255));
+            mCanvas.drawRect(mButton,mPaint);
+
+            mPaint.setColor(Color.argb(255, 255, 255, 255));
 
             // Draw some text while paused
             if(mPaused){
@@ -253,6 +281,8 @@ class SnakeGame extends SurfaceView implements Runnable{
 
     @Override
     public boolean onTouchEvent(MotionEvent motionEvent) {
+        mMotionEvent=motionEvent;
+
         switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_UP:
                 if (mPaused) {
