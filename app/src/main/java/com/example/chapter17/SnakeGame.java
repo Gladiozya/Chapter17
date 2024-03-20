@@ -9,7 +9,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.graphics.Rect;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -53,12 +52,9 @@ class SnakeGame extends SurfaceView implements Runnable{
     private Apple mApple;
     private Bitmap mImage;
 
-    //sizes for button
-    private int buttonWidth;
-    private int buttonHeight;
-    private int buttonPadding;
-    private Rect mButton;
     private MotionEvent mMotionEvent;
+    private Button mButton;
+    private  Bitmap buttonImage;
 
     // This is the constructor method that gets called
     // from SnakeActivity
@@ -104,7 +100,6 @@ class SnakeGame extends SurfaceView implements Runnable{
         mSurfaceHolder = getHolder();
         mPaint = new Paint();
 
-
         // Call the constructors of our two game objects
         mApple = new Apple(context,
                 new Point(NUM_BLOCKS_WIDE,
@@ -117,14 +112,7 @@ class SnakeGame extends SurfaceView implements Runnable{
                 blockSize);
 
         mDisplay = size;
-        buttonWidth=mDisplay.x/14;
-        buttonHeight=mDisplay.y/12;
-        buttonPadding=buttonWidth/90;
-
-        mButton=new Rect(buttonPadding,
-                mDisplay.y-(2*buttonHeight)+(4*buttonPadding),
-                buttonWidth,
-                mDisplay.y-buttonPadding);
+        mButton=new Button(mDisplay,context);
 
         mImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.background);
         mImage = Bitmap.createScaledBitmap(mImage, mDisplay.x, mDisplay.y, true);
@@ -161,7 +149,6 @@ class SnakeGame extends SurfaceView implements Runnable{
                     update();
                 }
             }
-
             draw();
         }
     }
@@ -211,9 +198,7 @@ class SnakeGame extends SurfaceView implements Runnable{
             mSP.play(mEat_ID, 1, 1, 0, 0, 1);
         }
 
-        if(mButton.top<mMotionEvent.getY() && mButton.right>mMotionEvent.getX()){
-            mPaused=true;
-        }
+        mPaused=mButton.Clicked(mMotionEvent);
 
         // Did the snake die?
         if (mSnake.detectDeath()) {
@@ -232,50 +217,51 @@ class SnakeGame extends SurfaceView implements Runnable{
         if (mSurfaceHolder.getSurface().isValid()) {
             mCanvas = mSurfaceHolder.lockCanvas();
 
-
-            // Fill the screen with a color
+            // Create background
             mCanvas.drawBitmap(mImage,0,0,mPaint);
 
-
-            // Set the size and color of the mPaint for the text
+            //draw pause button
+            buttonImage=mButton.getButtonImage(mPaused);
             mPaint.setColor(Color.argb(255, 255, 255, 255));
-            mPaint.setTextSize(120);
+            mButton.draw(mCanvas,mPaint,buttonImage);
 
-            // Draw the score
-            mCanvas.drawText("" + mScore, 20, 120, mPaint);
-
-            //draw the names
-            mPaint.setTextSize(100);
-            mCanvas.drawText("Corliss, Joshua", 2200, 120, mPaint);
+            drawText();
 
             // Draw the apple and the snake
             DrawApple.draw(mCanvas, mPaint);
             mSnake.draw(mCanvas, mPaint);
 
-            //draw pause button
-            mPaint.setColor(Color.argb(100,255,255,255));
-            mCanvas.drawRect(mButton,mPaint);
-
-            mPaint.setColor(Color.argb(255, 255, 255, 255));
-
-            // Draw some text while paused
-            if(mPaused){
-
-                // Set the size and color of the mPaint for the text
-                mPaint.setColor(Color.argb(255, 255, 255, 255));
-                mPaint.setTextSize(250);
-
-                // Draw the message
-                // We will give this an international upgrade soon
-                //mCanvas.drawText("Tap To Play!", 200, 700, mPaint);
-                mCanvas.drawText(getResources().
-                                getString(R.string.tap_to_play),
-                        200, 700, mPaint);
-            }
-
 
             // Unlock the mCanvas and reveal the graphics for this frame
             mSurfaceHolder.unlockCanvasAndPost(mCanvas);
+        }
+    }
+
+    void drawText(){
+        // Set the size and color of the mPaint for the text
+        mPaint.setColor(Color.argb(255, 255, 255, 255));
+        mPaint.setTextSize(120);
+
+        // Draw the score
+        mCanvas.drawText("" + mScore, 20, 120, mPaint);
+
+        //draw the names
+        mPaint.setTextSize(100);
+        mCanvas.drawText("Corliss, Joshua", 2200, 120, mPaint);
+
+        // Draw some text while paused
+        if(mPaused){
+
+            // Set the size and color of the mPaint for the text
+            mPaint.setColor(Color.argb(255, 255, 255, 255));
+            mPaint.setTextSize(250);
+
+            // Draw the message
+            // We will give this an international upgrade soon
+            //mCanvas.drawText("Tap To Play!", 200, 700, mPaint);
+            mCanvas.drawText(getResources().
+                            getString(R.string.tap_to_play),
+                    200, 700, mPaint);
         }
     }
 
