@@ -223,7 +223,7 @@ class SnakeGame extends SurfaceView implements Runnable{
             //draw pause button
             buttonImage=mButton.getButtonImage(mPaused);
             mPaint.setColor(Color.argb(255, 255, 255, 255));
-            mButton.draw(mCanvas,mPaint,buttonImage);
+            DrawButton.draw(mCanvas,mPaint,buttonImage);
 
             drawText();
 
