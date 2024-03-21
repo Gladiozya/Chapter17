@@ -229,7 +229,7 @@ class SnakeGame extends SurfaceView implements Runnable{
 
             // Draw the apple and the snake
             DrawApple.draw(mCanvas, mPaint);
-            mSnake.draw(mCanvas, mPaint);
+            DrawSnake.draw(mCanvas, mPaint);
 
 
             // Unlock the mCanvas and reveal the graphics for this frame
@@ -247,7 +247,7 @@ class SnakeGame extends SurfaceView implements Runnable{
 
         //draw the names
         mPaint.setTextSize(100);
-        mCanvas.drawText("Corliss, Joshua", 2200, 120, mPaint);
+        mCanvas.drawText("Corliss\nJoshua", 2200, 120, mPaint);
 
         // Draw some text while paused
         if(mPaused){

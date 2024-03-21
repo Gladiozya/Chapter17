@@ -9,10 +9,10 @@ import java.util.ArrayList;
 class Snake{
 
         // The location in the grid of all the segments
-        private ArrayList<Point> segmentLocations;
+        private static ArrayList<Point> segmentLocations;
 
         // How big is each segment of the snake?
-        private int mSegmentSize;
+        private static int mSegmentSize;
 
         // How big is the entire grid
         private Point mMoveRange;
@@ -22,10 +22,18 @@ class Snake{
         private int halfWayPoint;
 
         // A bitmap for the body
-        private Bitmap mBitmapBody;
+        private static Bitmap mBitmapBody;
 
-        private SnakeHeadBitmap HeadBitmap;
-        private SnakeHeadDirection snakeDirection;
+        private static SnakeHeadBitmap headBitmap;
+        private static SnakeHeadDirection snakeDirection;
+
+        public static ArrayList<Point> getSegmentLocations() { return segmentLocations; }
+
+        public static Bitmap getmBitmapBody() { return mBitmapBody; }
+
+        public static SnakeHeadDirection getSnakeDirection() { return snakeDirection; }
+
+        public static SnakeHeadBitmap getHeadBitmap() { return headBitmap; }
 
     Snake(Context context, Point mr, int ss) {
 
@@ -38,7 +46,7 @@ class Snake{
         mMoveRange = mr;
 
         // Create and scale the bitmaps
-        HeadBitmap = new SnakeHeadBitmap(context,ss);
+        headBitmap = new SnakeHeadBitmap(context,ss);
         snakeDirection= new SnakeHeadDirection();
 
         // Create and scale the body
@@ -128,24 +136,8 @@ class Snake{
         return false;
     }
 
-     void draw(Canvas canvas, Paint paint) {
 
-        // Don't run this code if ArrayList has nothing in it
-
-        if (!segmentLocations.isEmpty()) {
-
-            Bitmap direction=snakeDirection.draw(HeadBitmap);
-            drawBit(direction, 0 , canvas, paint);
-
-            // Draw the snake body one block at a time
-            for (int i = 1; i < segmentLocations.size(); i++) {
-                drawBit(mBitmapBody, i, canvas, paint);
-            }
-        }
-    }
-
-
-    void drawBit(Bitmap headDirection,int location ,Canvas canvas, Paint paint){
+    static void drawBit(Bitmap headDirection, int location, Canvas canvas, Paint paint){
         canvas.drawBitmap(headDirection,
                 segmentLocations.get(location).x
                         * mSegmentSize,
