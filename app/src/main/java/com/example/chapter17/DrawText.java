@@ -20,7 +20,7 @@ public class DrawText{
         mCanvas.drawText("Corliss\nJoshua", 2200, 120, mPaint);
 
         // Draw some text while paused
-        if(SnakeGame.getmPaused()){
+        if(PauseButton.getmPaused()){
 
             // Set the size and color of the mPaint for the text
             mPaint.setColor(Color.argb(255, 255, 255, 255));

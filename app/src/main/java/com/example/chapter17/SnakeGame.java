@@ -13,7 +13,6 @@ import android.view.SurfaceView;
 
 import androidx.core.content.res.ResourcesCompat;
 
-
 class SnakeGame extends SurfaceView implements Runnable{
 
     // Objects for the game loop/thread
@@ -21,10 +20,6 @@ class SnakeGame extends SurfaceView implements Runnable{
 
     // Control pausing between updates
     private long mNextFrameTime;
-
-    private volatile boolean mPlaying = false;
-    private static volatile boolean mPaused = true;
-
 
     // The size in segments of the playable area
     private final int NUM_BLOCKS_WIDE = 40;
@@ -51,8 +46,6 @@ class SnakeGame extends SurfaceView implements Runnable{
     public static Canvas getmCanvas() { return mCanvas; }
 
     public static int getmScore() { return mScore; }
-
-    public static boolean getmPaused () { return mPaused; }
 
     // This is the constructor method that gets called
     // from SnakeActivity
@@ -113,8 +106,8 @@ class SnakeGame extends SurfaceView implements Runnable{
     // Handles the game loop
     @Override
     public void run() {
-        while (mPlaying) {
-            if(!mPaused) {
+        while (PauseButton.getmPlaying()) {
+            if(!PauseButton.getmPaused()) {
                 if (updateRequired()) {
                     update();
                 }
@@ -156,7 +149,7 @@ class SnakeGame extends SurfaceView implements Runnable{
         mSnake.move();
 
         // Did the head of the snake eat the apple?
-        if(mSnake.checkDinner(mApple.getLocation())){
+        if(mSnake.checkDinner(Apple.getLocation())){
             // This reminds me of Edge of Tomorrow.
             // One day the apple will be ready!
             AppleLocation.spawn();
@@ -168,14 +161,14 @@ class SnakeGame extends SurfaceView implements Runnable{
             Audio.getmSP().play(Audio.getmEat_ID(), 1, 1, 0, 0, 1);
         }
 
-        mPaused=mButton.Clicked(mMotionEvent);
+        PauseButton.setmPaused(mButton.Clicked(mMotionEvent));
 
         // Did the snake die?
         if (mSnake.detectDeath()) {
             // Pause the game ready to start again
             Audio.getmSP().play(Audio.getmCrashID(), 1, 1, 0, 0, 1);
 
-            mPaused =true;
+            PauseButton.setmPaused(true);
         }
 
     }
@@ -187,7 +180,7 @@ class SnakeGame extends SurfaceView implements Runnable{
         if (mSurfaceHolder.getSurface().isValid()) {
             mCanvas = mSurfaceHolder.lockCanvas();
 
-            buttonImage=mButton.getButtonImage(mPaused);
+            buttonImage=mButton.getButtonImage(PauseButton.getmPaused());
             mPaint.setColor(Color.argb(255, 255, 255, 255));
 
             //Draw background
@@ -210,8 +203,8 @@ class SnakeGame extends SurfaceView implements Runnable{
 
         switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_UP:
-                if (mPaused) {
-                    mPaused = false;
+                if (PauseButton.getmPaused()) {
+                    PauseButton.setmPaused(false);
                     newGame();
 
                     // Don't want to process snake direction for this tap
@@ -232,7 +225,7 @@ class SnakeGame extends SurfaceView implements Runnable{
 
     // Stop the thread
     public void pause() {
-        mPlaying = false;
+        PauseButton.setmPlaying(false);
         try {
             mThread.join();
         } catch (InterruptedException e) {
@@ -243,7 +236,7 @@ class SnakeGame extends SurfaceView implements Runnable{
 
     // Start the thread
     public void resume() {
-        mPlaying = true;
+        PauseButton.setmPlaying(true);
         mThread = new Thread(this);
         mThread.start();
     }
