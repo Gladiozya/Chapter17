@@ -1,5 +1,7 @@
 package com.example.chapter17;
 
+import static java.lang.Thread.sleep;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -46,6 +48,8 @@ class SnakeGame extends SurfaceView implements Runnable{
     public static Canvas getmCanvas() { return mCanvas; }
 
     public static int getmScore() { return mScore; }
+
+    private Thread getmThread() { return mThread; }
 
     // This is the constructor method that gets called
     // from SnakeActivity
@@ -226,11 +230,11 @@ class SnakeGame extends SurfaceView implements Runnable{
     // Stop the thread
     public void pause() {
         PauseButton.setmPlaying(false);
-        try {
-            mThread.join();
-        } catch (InterruptedException e) {
-            // Error
+        PauseButton.setmPaused(true);
+        while(PauseButton.getmPaused()){
+            mThread.suspend();
         }
+        mThread.resume();
     }
 
 
