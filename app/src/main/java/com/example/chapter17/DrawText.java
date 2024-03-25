@@ -17,7 +17,7 @@ public class DrawText{
 
         //draw the names
         mPaint.setTextSize(100);
-        mCanvas.drawText("Corliss\nJoshua", 2200, 120, mPaint);
+        mCanvas.drawText("Person1 & Person2", 1700, 120, mPaint);
 
         // Draw some text while paused
         if(PauseButton.getmPaused()){

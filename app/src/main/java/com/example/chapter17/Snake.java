@@ -148,6 +148,4 @@ class Snake{
     void switchHeading(MotionEvent motionEvent){
         snakeDirection.changeDirection(motionEvent, halfWayPoint);
     }
-
-
 }
