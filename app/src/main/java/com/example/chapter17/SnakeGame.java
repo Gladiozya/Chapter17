@@ -192,9 +192,9 @@ class SnakeGame extends SurfaceView implements Runnable{
             mCanvas.drawBitmap(mImage,0,0,mPaint);
             //Draw Apple, button, Snake, and Text
             DrawApple.draw(mCanvas, mPaint);
-            DrawButton.draw(mCanvas,mPaint,buttonImage);
             DrawSnake.draw(mCanvas, mPaint);
-            DrawText.draw(mCanvas, mPaint);
+            DrawText.draw(mCanvas, mPaint,mDisplay);
+            DrawButton.draw(mCanvas,mPaint,buttonImage);
 
             // Unlock the mCanvas and reveal the graphics for this frame
             mSurfaceHolder.unlockCanvasAndPost(mCanvas);

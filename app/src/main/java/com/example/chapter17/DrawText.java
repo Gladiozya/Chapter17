@@ -3,10 +3,11 @@ package com.example.chapter17;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 
 public class DrawText{
 
-    public static void draw(Canvas mCanvas, Paint mPaint){
+    public static void draw(Canvas mCanvas, Paint mPaint, Point display){
 
         // Set the size and color of the mPaint for the text
         mPaint.setColor(Color.argb(255, 255, 255, 255));
@@ -17,7 +18,7 @@ public class DrawText{
 
         //draw the names
         mPaint.setTextSize(100);
-        mCanvas.drawText("Person1 & Person2", 1700, 120, mPaint);
+        mCanvas.drawText("Person1 & Person2", display.x-850, 120, mPaint);
 
         // Draw some text while paused
         if(PauseButton.getmPaused()){
