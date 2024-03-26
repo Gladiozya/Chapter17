@@ -7,8 +7,9 @@ public class PauseButton {
     public static boolean getmPlaying() { return mPlaying; }
     public static boolean getmPaused() { return mPaused; }
 
-    public static void setmPaused(boolean mPaused) {
+    public static boolean setmPaused(boolean mPaused) {
         PauseButton.mPaused = mPaused;
+        return mPaused;
     }
 
     public static void setmPlaying(boolean mPlaying) {

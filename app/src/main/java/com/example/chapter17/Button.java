@@ -21,10 +21,6 @@ public class Button {
     private Bitmap buttonPause;
     private Bitmap buttonResume;
 
-//    public int getButtonWidth() { return buttonWidth; }
-//
-//    public int getButtonHeight() { return buttonHeight; }
-
     public static Rect getmButton() { return mButton; }
 
     Button(Point display, Context context){
