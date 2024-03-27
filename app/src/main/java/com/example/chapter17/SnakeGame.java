@@ -96,7 +96,7 @@ class SnakeGame extends SurfaceView implements Runnable{
         mSnake.reset(NUM_BLOCKS_WIDE, mNumBlocksHigh);
 
         // Get the apple ready for dinner
-        AppleLocation.spawn();
+        mApple.spawn();
 
         // Reset the mScore
         mScore = 0;
@@ -156,7 +156,7 @@ class SnakeGame extends SurfaceView implements Runnable{
         if(mSnake.checkDinner(Apple.getLocation())){
             // This reminds me of Edge of Tomorrow.
             // One day the apple will be ready!
-            AppleLocation.spawn();
+            mApple.spawn();
 
             // Add to  mScore
             mScore = mScore + 1;
@@ -191,10 +191,10 @@ class SnakeGame extends SurfaceView implements Runnable{
             //Draw background
             mCanvas.drawBitmap(mImage,0,0,mPaint);
             //Draw Apple, button, Snake, and Text
-            DrawApple.draw(mCanvas, mPaint);
-            DrawSnake.draw(mCanvas, mPaint);
+            mApple.draw(mCanvas, mPaint);
+            mSnake.draw(mCanvas, mPaint);
             DrawText.draw(mCanvas, mPaint,mDisplay);
-            DrawButton.draw(mCanvas,mPaint,buttonImage);
+            mButton.draw(mCanvas,mPaint,buttonImage);
 
             // Unlock the mCanvas and reveal the graphics for this frame
             mSurfaceHolder.unlockCanvasAndPost(mCanvas);
@@ -223,10 +223,10 @@ class SnakeGame extends SurfaceView implements Runnable{
                     }
                 }
 
-                // Let the Snake class handle the input
-                mSnake.switchHeading(motionEvent);
                 break;
                 default:
+                    // Let the Snake class handle the input
+                    mSnake.switchHeading(motionEvent);
                     break;
         }
         return true;
@@ -253,7 +253,7 @@ Delete when done
     // Stop the thread
     public static void pause() throws InterruptedException {
         synchronized (mThread) {
-            while(PauseButton.getmPaused()) {
+            if(PauseButton.getmPaused()) {
                 mThread = new Thread();
                 mThread.start();
                 unPause();

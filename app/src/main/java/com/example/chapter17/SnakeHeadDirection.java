@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class SnakeHeadDirection{
 
-    private  enum Heading {
+    private enum Heading {
         UP(1), RIGHT(2), DOWN(3), LEFT(4);
 
         private int headingValue;

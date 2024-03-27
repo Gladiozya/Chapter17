@@ -52,6 +52,11 @@ public class Button {
         }else{
             return Bitmap.createScaledBitmap(buttonPause, mButton.right,mButton.bottom-mButton.top, true);
         }
-
+    }
+    static void draw(Canvas canvas, Paint paint, Bitmap image){
+        paint.setColor(Color.argb(100,255,255,255));
+        canvas.drawRect(Button.getmButton(),paint);
+        canvas.drawBitmap(image,Button.getmButton().left,
+                Button.getmButton().top,paint);
     }
 }

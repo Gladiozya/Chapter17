@@ -9,10 +9,10 @@ import java.util.ArrayList;
 class Snake{
 
         // The location in the grid of all the segments
-        private static ArrayList<Point> segmentLocations;
+    private static ArrayList<Point> segmentLocations;
 
-        // How big is each segment of the snake?
-        private static int mSegmentSize;
+    // How big is each segment of the snake?
+    private static int mSegmentSize;
 
         // How big is the entire grid
         private Point mMoveRange;
@@ -148,4 +148,21 @@ class Snake{
     void switchHeading(MotionEvent motionEvent){
         snakeDirection.changeDirection(motionEvent, halfWayPoint);
     }
+
+    public static void draw(Canvas canvas, Paint paint) {
+
+        // Don't run this code if ArrayList has nothing in it
+
+        if (!getSegmentLocations().isEmpty()) {
+
+            Bitmap direction=getSnakeDirection().draw(getHeadBitmap());
+            drawBit(direction, 0 , canvas, paint);
+
+            // Draw the snake body one block at a time
+            for (int i = 1; i < getSegmentLocations().size(); i++) {
+                drawBit(getmBitmapBody(), i, canvas, paint);
+            }
+        }
+    }
+
 }

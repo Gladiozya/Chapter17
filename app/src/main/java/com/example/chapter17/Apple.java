@@ -3,7 +3,11 @@ package com.example.chapter17;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Point;
+
+import java.util.Random;
 
 class Apple {
     // The range of values to spawn an apple
@@ -46,5 +50,19 @@ class Apple {
 
         // Resize the bitmap
         mBitmapApple = Bitmap.createScaledBitmap(mBitmapApple, s, s, false);
+    }
+
+    static void spawn(){
+        // Choose two random values and place the apple
+        Random random = new Random();
+        getLocation().x = random.nextInt(getmSpawnRange().x) + 1;
+        getLocation().y = random.nextInt(getmSpawnRange().y - 1) + 1;
+    }
+
+    // Draw the apple
+    static void draw(Canvas canvas, Paint paint){
+        canvas.drawBitmap(getmBitmapApple(),
+                getLocation().x * getmSize(), getLocation().y * getmSize(), paint);
+
     }
 }
