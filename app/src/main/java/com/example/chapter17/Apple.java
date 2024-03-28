@@ -3,33 +3,37 @@ package com.example.chapter17;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Point;
+
+import java.util.Random;
 
 class Apple {
     // The range of values to spawn an apple
-    private static Point mSpawnRange;
-    private static int mSize;
+    private  Point mSpawnRange;
+    private  int mSize;
 
     // An image to represent the apple
-    private static Bitmap mBitmapApple;
+    private  Bitmap mBitmapApple;
 
 
     // The grid location of the apple
-    private static Point location = new Point();
+    private  Point location = new Point();
 
-    public static Bitmap getmBitmapApple() {
+    public  Bitmap getmBitmapApple() {
         return mBitmapApple;
     }
 
-    public static Point getmSpawnRange() {
+    public  Point getmSpawnRange() {
         return mSpawnRange;
     }
 
-    public static int getmSize() {
+    public  int getmSize() {
         return mSize;
     }
 
-    public static Point getLocation() { return location; }
+    public  Point getLocation() { return location; }
 
     /// Set up the apple in the constructor
     Apple(Context context, Point sr, int s){
@@ -46,5 +50,19 @@ class Apple {
 
         // Resize the bitmap
         mBitmapApple = Bitmap.createScaledBitmap(mBitmapApple, s, s, false);
+    }
+
+     void spawn(){
+        // Choose two random values and place the apple
+        Random random = new Random();
+        getLocation().x = random.nextInt(getmSpawnRange().x) + 1;
+        getLocation().y = random.nextInt(getmSpawnRange().y - 1) + 1;
+    }
+
+    // Draw the apple
+     void draw(Canvas canvas, Paint paint){
+        canvas.drawBitmap(getmBitmapApple(),
+                getLocation().x * getmSize(), getLocation().y * getmSize(), paint);
+
     }
 }

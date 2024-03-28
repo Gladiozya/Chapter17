@@ -1,18 +1,22 @@
 package com.example.chapter17;
 
 public class PauseButton {
-    private static volatile boolean mPlaying = false;
-    private static volatile boolean mPaused = true;
+    private  volatile boolean mPlaying;
+    private  volatile boolean mPaused;
 
-    public static boolean getmPlaying() { return mPlaying; }
-    public static boolean getmPaused() { return mPaused; }
+    public  boolean getmPlaying() { return mPlaying; }
+    public  boolean getmPaused() { return mPaused; }
 
-    public static boolean setmPaused(boolean mPaused) {
-        PauseButton.mPaused = mPaused;
-        return mPaused;
+    public void setmPaused(boolean mPaused) {
+        this.mPaused = mPaused;
     }
 
-    public static void setmPlaying(boolean mPlaying) {
-        PauseButton.mPlaying = mPlaying;
+    public  void setmPlaying(boolean mPlaying) {
+        this.mPlaying = mPlaying;
+    }
+
+    PauseButton(){
+        setmPlaying(false);
+        setmPaused(true);
     }
 }
