@@ -9,7 +9,7 @@ import android.graphics.Point;
 
 import java.util.Random;
 
-class Apple {
+class Apple  implements IDrawable{
     // The range of values to spawn an apple
     private  Point mSpawnRange;
     private  int mSize;
@@ -60,7 +60,7 @@ class Apple {
     }
 
     // Draw the apple
-     void draw(Canvas canvas, Paint paint){
+    public void draw(Canvas canvas, Paint paint){
         canvas.drawBitmap(getmBitmapApple(),
                 getLocation().x * getmSize(), getLocation().y * getmSize(), paint);
 

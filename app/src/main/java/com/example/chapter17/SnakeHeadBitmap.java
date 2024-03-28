@@ -38,7 +38,6 @@ public class SnakeHeadBitmap {
     }
 
     public Bitmap getmBitmapHeadRight() {
-
         return mBitmapHeadRight;
     }
 

@@ -6,7 +6,7 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
-class Snake{
+class Snake implements IDrawable{
 
         // The location in the grid of all the segments
     private ArrayList<Point> segmentLocations;
@@ -17,8 +17,7 @@ class Snake{
         // How big is the entire grid
         private Point mMoveRange;
 
-        // Where is the centre of the screen
-        // horizontally in pixels?
+        // Where is the horizontal center
         private int halfWayPoint;
 
 
@@ -92,7 +91,6 @@ class Snake{
         }
 
         // Move the head in the appropriate heading
-        // Get the existing head position
         Point p = segmentLocations.get(0);
 
         snakeDirection.movement(segmentLocations);
@@ -110,7 +108,6 @@ class Snake{
 
             dead = true;
         }
-
         // Eaten itself?
         for (int i = segmentLocations.size() - 1; i > 0; i--) {
             // Have any of the sections collided with the head
@@ -152,13 +149,13 @@ class Snake{
         snakeDirection.changeDirection(motionEvent, halfWayPoint);
     }
 
-    public  void draw(Canvas canvas, Paint paint) {
+    public void draw(Canvas canvas, Paint paint) {
 
         // Don't run this code if ArrayList has nothing in it
 
         if (!getSegmentLocations().isEmpty()) {
 
-            Bitmap direction=getSnakeDirection().draw(getHeadBitmap());
+            Bitmap direction=getSnakeDirection().switchHeading(getHeadBitmap());
             drawBit(direction, 0 , canvas, paint);
 
             // Draw the snake body one block at a time

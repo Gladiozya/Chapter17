@@ -77,7 +77,7 @@ public class SnakeHeadDirection{
         heading=headingDirection[headingIndex];
     }
 
-    Bitmap draw(SnakeHeadBitmap HeadBitmap) {
+    Bitmap switchHeading(SnakeHeadBitmap HeadBitmap) {
         // Draw the head
         switch (heading) {
             case RIGHT:

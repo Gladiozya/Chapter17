@@ -14,7 +14,6 @@ import android.view.SurfaceView;
 import androidx.core.content.res.ResourcesCompat;
 
 class SnakeGame extends SurfaceView implements Runnable{
-    private Object mPauseLock;
 
     // Objects for the game loop/thread
     private Thread mThread;
@@ -54,8 +53,6 @@ class SnakeGame extends SurfaceView implements Runnable{
 
     public int getmScore() { return mScore; }
 
-    private Thread getmThread() { return mThread; }
-
     // This is the constructor method that gets called
     // from SnakeActivity
     public SnakeGame(Context context, Point size) {
@@ -65,7 +62,6 @@ class SnakeGame extends SurfaceView implements Runnable{
         int blockSize = size.x / NUM_BLOCKS_WIDE;
         // How many blocks of the same size will fit into the height
         mNumBlocksHigh = size.y / blockSize;
-
 
         mAudio=new Audio(context);
 
@@ -85,7 +81,12 @@ class SnakeGame extends SurfaceView implements Runnable{
                 blockSize);
 
         mDisplay = size;
-        mButton=new Button(mDisplay,context);
+        mButton= new Button(mDisplay, context) {
+            @Override
+            public void draw(Canvas canvas, Paint paint) {
+
+            }
+        };
         mPauseButton= new PauseButton();
 
         mImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.background);
@@ -149,7 +150,6 @@ class SnakeGame extends SurfaceView implements Runnable{
             // methods are executed
             return true;
         }
-
         return false;
     }
 
@@ -162,8 +162,6 @@ class SnakeGame extends SurfaceView implements Runnable{
 
         // Did the head of the snake eat the apple?
         if(mSnake.checkDinner(mApple.getLocation())){
-            // This reminds me of Edge of Tomorrow.
-            // One day the apple will be ready!
             mApple.spawn();
 
             // Add to  mScore
@@ -185,7 +183,6 @@ class SnakeGame extends SurfaceView implements Runnable{
         }
 
     }
-
 
     // Do all the drawing
     public void draw() {
@@ -211,7 +208,6 @@ class SnakeGame extends SurfaceView implements Runnable{
             mSurfaceHolder.unlockCanvasAndPost(mCanvas);
         }
     }
-
 
     //Handles play logic
     @Override
@@ -243,24 +239,6 @@ class SnakeGame extends SurfaceView implements Runnable{
         return true;
     }
 
-/*
-Old code.
-Delete when done
-//                if (PauseButton.getmPaused()) {
-//                    try {
-//                        pause();
-//                    } catch (InterruptedException e) {
-//                        throw new RuntimeException(e);
-//                    }
-////                    PauseButton.setmPaused(false);
-////                    newGame();
-//
-//                    // Don't want to process snake direction for this tap
-//                    return true;
-//                }
-*/
-
-
     // Stop the thread
     public void pause() throws InterruptedException {
         synchronized (mThread) {
@@ -273,28 +251,7 @@ Delete when done
 
     }
 
-        //            synchronized (mThread) {
-//                try {
-//                    mThread.wait(0);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-        //            }
-
-
-
-
-
-
-
-    /*
-    public  void pause() throws InterruptedException {
-        while(PauseButton.getmPaused()){
-            mThread.wait(1000);
-        }
-    }
-     */
-
+    //Resume paused thread
     public void unPause() throws InterruptedException {
         synchronized (mThread) {
             mPauseButton.setmPaused(false);

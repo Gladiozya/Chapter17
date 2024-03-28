@@ -11,7 +11,7 @@ import android.view.MotionEvent;
 import android.graphics.Point;
 
 
-public class Button {
+public abstract class Button implements IDrawable{
     //sizes for button
     private int buttonWidth;
     private int buttonHeight;
@@ -53,7 +53,8 @@ public class Button {
             return Bitmap.createScaledBitmap(buttonPause, mButton.right,mButton.bottom-mButton.top, true);
         }
     }
-     void draw(Canvas canvas, Paint paint, Bitmap image){
+
+    public void draw(Canvas canvas, Paint paint, Bitmap image){
         paint.setColor(Color.argb(100,255,255,255));
         canvas.drawRect(getmButton(),paint);
         canvas.drawBitmap(image,getmButton().left, getmButton().top,paint);
