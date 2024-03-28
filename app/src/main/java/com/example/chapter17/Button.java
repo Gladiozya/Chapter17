@@ -16,12 +16,12 @@ public class Button {
     private int buttonWidth;
     private int buttonHeight;
     private int buttonPadding;
-    private static Rect mButton;
+    private  Rect mButton;
 
     private Bitmap buttonPause;
     private Bitmap buttonResume;
 
-    public static Rect getmButton() { return mButton; }
+    public  Rect getmButton() { return mButton; }
 
     Button(Point display, Context context){
         buttonWidth=display.x/14;
@@ -53,10 +53,9 @@ public class Button {
             return Bitmap.createScaledBitmap(buttonPause, mButton.right,mButton.bottom-mButton.top, true);
         }
     }
-    static void draw(Canvas canvas, Paint paint, Bitmap image){
+     void draw(Canvas canvas, Paint paint, Bitmap image){
         paint.setColor(Color.argb(100,255,255,255));
-        canvas.drawRect(Button.getmButton(),paint);
-        canvas.drawBitmap(image,Button.getmButton().left,
-                Button.getmButton().top,paint);
+        canvas.drawRect(getmButton(),paint);
+        canvas.drawBitmap(image,getmButton().left, getmButton().top,paint);
     }
 }

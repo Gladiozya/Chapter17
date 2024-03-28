@@ -12,15 +12,15 @@ import java.io.IOException;
 
 class Audio {
     // for playing sound effects
-    private static SoundPool mSP;
-    private static int mEat_ID = -1;
-    private static int mCrashID = -1;
+    private SoundPool mSP;
+    private int mEat_ID = -1;
+    private int mCrashID = -1;
 
-    public static SoundPool getmSP() { return mSP; }
-    public static int getmEat_ID() { return mEat_ID; }
-    public static int getmCrashID() { return mCrashID; }
+    public SoundPool getmSP() { return mSP; }
+    public int getmEat_ID() { return mEat_ID; }
+    public int getmCrashID() { return mCrashID; }
 
-    public static void buildAudio(Context context){
+    Audio(Context context){
         // Initialize the SoundPool
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             AudioAttributes audioAttributes = new AudioAttributes.Builder()
@@ -53,6 +53,14 @@ class Audio {
 
 
     }
+
+    void playEat() {
+        getmSP().play(getmEat_ID(), 1, 1, 0, 0, 1);
+    }
+    void playCrash() {
+        getmSP().play(getmCrashID(), 1, 1, 0, 0, 1);
+    }
+
 
 
 }

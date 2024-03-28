@@ -9,10 +9,10 @@ import java.util.ArrayList;
 class Snake{
 
         // The location in the grid of all the segments
-    private static ArrayList<Point> segmentLocations;
+    private ArrayList<Point> segmentLocations;
 
     // How big is each segment of the snake?
-    private static int mSegmentSize;
+    private int mSegmentSize;
 
         // How big is the entire grid
         private Point mMoveRange;
@@ -21,19 +21,22 @@ class Snake{
         // horizontally in pixels?
         private int halfWayPoint;
 
+
         // A bitmap for the body
-        private static Bitmap mBitmapBody;
+        private Bitmap mBitmapBody;
 
-        private static SnakeHeadBitmap headBitmap;
-        private static SnakeHeadDirection snakeDirection;
+        private SnakeHeadBitmap headBitmap;
+        private SnakeHeadDirection snakeDirection;
 
-        public static ArrayList<Point> getSegmentLocations() { return segmentLocations; }
+        public ArrayList<Point> getSegmentLocations() { return segmentLocations; }
 
-        public static Bitmap getmBitmapBody() { return mBitmapBody; }
+        public Bitmap getmBitmapBody() { return mBitmapBody; }
 
-        public static SnakeHeadDirection getSnakeDirection() { return snakeDirection; }
+        public SnakeHeadDirection getSnakeDirection() { return snakeDirection; }
 
-        public static SnakeHeadBitmap getHeadBitmap() { return headBitmap; }
+        public SnakeHeadBitmap getHeadBitmap() { return headBitmap; }
+
+
 
     Snake(Context context, Point mr, int ss) {
 
@@ -137,7 +140,7 @@ class Snake{
     }
 
 
-    static void drawBit(Bitmap headDirection, int location, Canvas canvas, Paint paint){
+     void drawBit(Bitmap headDirection, int location, Canvas canvas, Paint paint){
         canvas.drawBitmap(headDirection,
                 segmentLocations.get(location).x
                         * mSegmentSize,
@@ -149,7 +152,7 @@ class Snake{
         snakeDirection.changeDirection(motionEvent, halfWayPoint);
     }
 
-    public static void draw(Canvas canvas, Paint paint) {
+    public  void draw(Canvas canvas, Paint paint) {
 
         // Don't run this code if ArrayList has nothing in it
 
